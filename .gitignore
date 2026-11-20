@@ -1,0 +1,23 @@
+
+# Dados pessoais do Duolingo
+/data/
+
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+!.env.example
+
+# Dependências
+node_modules/
+
+# Builds
+dist/
+target/
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

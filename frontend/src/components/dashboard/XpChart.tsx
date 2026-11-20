@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -8,22 +9,20 @@ import {
   Tooltip,
 } from "recharts";
 
-const xpData = [
-  { month: "Jan", xp: 1200 },
-  { month: "Fev", xp: 1800 },
-  { month: "Mar", xp: 1500 },
-  { month: "Abr", xp: 2400 },
-  { month: "Mai", xp: 2100 },
-  { month: "Jun", xp: 3200 },
-  { month: "Jul", xp: 2800 },
-  { month: "Ago", xp: 3900 },
-  { month: "Set", xp: 3500 },
-  { month: "Out", xp: 4600 },
-  { month: "Nov", xp: 4200 },
-  { month: "Dez", xp: 5200 },
-];
+type MonthlyXp = {
+  month: string;
+  xp: number;
+};
 
 export function XpChart() {
+  const [xpData, setXpData] = useState<MonthlyXp[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/duolingo/stats/monthly-xp")
+      .then((response) => response.json())
+      .then((data) => setXpData(data))
+      .catch((error) => console.error("Erro ao buscar XP mensal:", error));
+  }, []);
   return (
     <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
       <div className="mb-6">

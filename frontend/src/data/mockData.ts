@@ -23,4 +23,10 @@ export const dashboardStats = [
     description: "Aguardando dados históricos",
     iconName: "Clock",
   },
+  {
+    title: "Sessões de estudo",
+    value: "--",
+    description: "Total de sessões realizadas",
+    iconName: "Clock",
+},
 ];

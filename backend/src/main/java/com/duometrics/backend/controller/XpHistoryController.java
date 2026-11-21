@@ -55,5 +55,11 @@ public class XpHistoryController {
     public int getTotalStudyTime() {
         return xpHistoryService.calculateTotalStudyTime();
     }
+
+    @GetMapping("/stats/total-sessions")
+    public int getTotalSessions() {
+        return xpHistoryService.calculateTotalSessions();
+    }
+    
     
 }

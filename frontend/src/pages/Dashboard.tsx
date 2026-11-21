@@ -24,6 +24,7 @@ export function Dashboard() {
     const [totalXp, setTotalXp] = useState<number | null>(null);
     const [studyDays, setStudyDays] = useState<number | null>(null);
     const [totalStudyTime, setTotalStudyTime] = useState<number | null>(null);
+    const [totalSessions, setTotalSessions] = useState<number | null>(null);
     const [bestXpDay, setBestXpDay] = useState<{
         xp: number;
         date: number;
@@ -35,6 +36,11 @@ export function Dashboard() {
     const totalMinutes = totalStudyTime !== null
         ? Math.floor((totalStudyTime % 3600) / 60)
         : null;
+
+    const totalSessionsValue =
+        totalSessions !== null
+            ? totalSessions.toLocaleString("pt-BR")
+            : "Carregando...";
 
     useEffect(() => {
         fetch("http://localhost:8080/api/duolingo/stats/total-xp")
@@ -62,6 +68,15 @@ export function Dashboard() {
             })
             .catch((error) => {
                 console.error("Erro ao buscar tempo total de estudo:", error);
+            });
+
+        fetch("http://localhost:8080/api/duolingo/stats/total-sessions")
+            .then((response) => response.json())
+            .then((data) => {
+                setTotalSessions(data);
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar total de sessões:", error);
             });
 
         fetch("http://localhost:8080/api/duolingo/stats/best-xp-day")
@@ -112,7 +127,10 @@ export function Dashboard() {
                                     ? totalHours === null || totalMinutes === null
                                         ? "Carregando..."
                                         : `${totalHours}h ${totalMinutes}min`
-                                    : stat.value;
+                                    : stat.title === "Sessões de estudo"
+                                        ? totalSessionsValue
+                                        : stat.value;
+
 
                     return (
                         <StatCard

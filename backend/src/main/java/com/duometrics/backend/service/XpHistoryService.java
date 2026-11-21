@@ -64,6 +64,20 @@ public class XpHistoryService {
 
     }
 
+    public int calculateTotalSessions() {
+
+        XpHistory history = loadHistory();
+
+        int totalSessions = 0;
+
+        for (XpSummary summary : history.getSummaries()){
+            if (summary.getNumSessions() != null){
+                totalSessions += summary.getNumSessions();
+            }
+        }
+        return totalSessions;
+    }
+
     public int calculateStudyDays() {
 
         XpHistory history = loadHistory();
